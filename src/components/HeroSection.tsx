@@ -1,6 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowDownIcon } from "lucide-react";
+import {
+  ArrowDownIcon,
+  GraduationCapIcon,
+  BriefcaseIcon,
+  AwardIcon,
+  UserIcon,
+  FolderIcon,
+  WrenchIcon,
+  InfoIcon,
+  MailIcon,
+} from "lucide-react";
 
 interface HeroSectionProps {
   name?: string;
@@ -8,14 +18,47 @@ interface HeroSectionProps {
   bio?: string;
 }
 
+interface Education {
+  degree: string;
+  institution: string;
+  year: string;
+  description?: string;
+}
+
 const HeroSection = ({
   name = "Soubhagya Swain",
   title = "Data Analyst & Visualization Expert",
   bio = "I Turn Complex Data Into Clear, Actionable Insights Through Statistical Analysis, Compelling Visualizations, And Predictive Modeling — With Just Enough Magic To Make You Wonder If I Time-Traveled To Get The Answers.",
 }: HeroSectionProps) => {
+  // Sample education data
+  const educationData: Education[] = [
+    {
+      degree: "Master of Science in Data Analytics",
+      institution: "University of Data Science",
+      year: "2018-2020",
+      description:
+        "Specialized in statistical modeling and data visualization techniques. Graduated with honors.",
+    },
+    {
+      degree: "Bachelor of Science in Computer Science",
+      institution: "Tech University",
+      year: "2014-2018",
+      description: "Focus on algorithms and database management systems.",
+    },
+  ];
+
+  // Function to scroll to a section
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="min-h-screen flex flex-col justify-center items-center px-4 py-20 bg-background">
-      <div className="container max-w-5xl mx-auto">
+      {/* Hero Section */}
+      <div id="profile" className="container max-w-5xl mx-auto pt-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -35,7 +78,10 @@ const HeroSection = ({
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
             >
-              <button className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+              <button
+                className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                onClick={() => scrollToSection("projects")}
+              >
                 View Projects
                 <ArrowDownIcon size={16} />
               </button>
@@ -51,6 +97,197 @@ const HeroSection = ({
             <DataVisualization />
           </motion.div>
         </div>
+      </div>
+
+      {/* Projects Section Placeholder */}
+      <div id="projects" className="container max-w-5xl mx-auto mt-24 pt-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="space-y-8"
+        >
+          <div className="flex items-center gap-3">
+            <FolderIcon size={24} className="text-primary" />
+            <h2 className="text-2xl md:text-3xl font-bold">
+              Projects / Portfolio
+            </h2>
+          </div>
+          <p className="text-muted-foreground">
+            Projects will be displayed here from the ProjectsGallery component.
+          </p>
+        </motion.div>
+      </div>
+
+      {/* Skills Section Placeholder */}
+      <div id="skills" className="container max-w-5xl mx-auto mt-24 pt-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="space-y-8"
+        >
+          <div className="flex items-center gap-3">
+            <WrenchIcon size={24} className="text-primary" />
+            <h2 className="text-2xl md:text-3xl font-bold">Skills / Tools</h2>
+          </div>
+          <p className="text-muted-foreground">
+            Skills will be displayed here from the SkillsSection component.
+          </p>
+        </motion.div>
+      </div>
+
+      {/* Education Section */}
+      <div id="education" className="container max-w-5xl mx-auto mt-24 pt-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="space-y-8"
+        >
+          <div className="flex items-center gap-3">
+            <GraduationCapIcon size={24} className="text-primary" />
+            <h2 className="text-2xl md:text-3xl font-bold">Education</h2>
+          </div>
+
+          <div className="space-y-6">
+            {educationData.map((edu, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-card border rounded-lg p-6 shadow-sm"
+              >
+                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                  <div>
+                    <h3 className="font-semibold text-lg">{edu.degree}</h3>
+                    <p className="text-muted-foreground">{edu.institution}</p>
+                  </div>
+                  <span className="text-sm text-muted-foreground bg-muted px-2 py-1 rounded inline-block">
+                    {edu.year}
+                  </span>
+                </div>
+                {edu.description && (
+                  <p className="mt-3 text-muted-foreground">
+                    {edu.description}
+                  </p>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Certifications Section */}
+      <div
+        id="certifications"
+        className="container max-w-5xl mx-auto mt-24 pt-10"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="space-y-8"
+        >
+          <div className="flex items-center gap-3">
+            <AwardIcon size={24} className="text-primary" />
+            <h2 className="text-2xl md:text-3xl font-bold">
+              Certifications & Achievements
+            </h2>
+          </div>
+          <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="bg-card border rounded-lg p-6 shadow-sm"
+            >
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                <div>
+                  <h3 className="font-semibold text-lg">
+                    Certified Data Analyst
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Data Science Association
+                  </p>
+                </div>
+                <span className="text-sm text-muted-foreground bg-muted px-2 py-1 rounded inline-block">
+                  2021
+                </span>
+              </div>
+              <p className="mt-3 text-muted-foreground">
+                Professional certification in data analysis and visualization
+                techniques.
+              </p>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* About Me Section */}
+      <div id="about" className="container max-w-5xl mx-auto mt-24 pt-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="space-y-8"
+        >
+          <div className="flex items-center gap-3">
+            <InfoIcon size={24} className="text-primary" />
+            <h2 className="text-2xl md:text-3xl font-bold">About Me</h2>
+          </div>
+          <div className="bg-card border rounded-lg p-6 shadow-sm">
+            <p className="text-muted-foreground">
+              I'm a passionate data analyst with over 5 years of experience
+              transforming complex datasets into actionable insights. My
+              approach combines technical expertise with creative
+              problem-solving to deliver clear, impactful data visualizations
+              and analysis that drive business decisions.
+            </p>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Contact Section */}
+      <div
+        id="contact"
+        className="container max-w-5xl mx-auto mt-24 pt-10 mb-20"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+          className="space-y-8"
+        >
+          <div className="flex items-center gap-3">
+            <MailIcon size={24} className="text-primary" />
+            <h2 className="text-2xl md:text-3xl font-bold">Contact</h2>
+          </div>
+          <div className="bg-card border rounded-lg p-6 shadow-sm">
+            <p className="text-muted-foreground mb-4">
+              Interested in working together? Feel free to reach out through any
+              of the channels below.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="mailto:contact@example.com"
+                className="flex items-center gap-2 text-primary hover:underline"
+              >
+                <MailIcon size={16} />
+                contact@example.com
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       <motion.div
